@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: infoapi
+  codec:
+    max-in-memory-size: 10MB
+  cache:
+    type: redis
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: ${SPRING_REDIS_PORT:6379}
+
+pokemon:
+  api:
+    url: https://pokeapi.co/api/v2/pokemon/
+    server: https://pokeapi.co
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+resilience4j:
+  circuitbreaker:
+    instances:
+      pokemonService:
+        register-health-indicator: true
+        failure-rate-threshold: 50
+        sliding-window-size: 10
+        wait-duration-in-open-state: 10000
+        permitted-number-of-calls-in-half-open-state: 3
+        minimum-number-of-calls: 5
+
